@@ -1,0 +1,128 @@
+<app-home></app-home>
+<button class="btn btn-primary" id="back-button" (click)="goBack()"><i class="fa fa-arrow-left" style="width: 20px;"></i></button>
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="mb-5 mt-5 text-center" id="title-h1">
+      List of competitors for competition
+    </h1>
+    <div class="input-group mb-5 text-center" style="width: 400px">
+      <span class="input-group-text" id="inputGroup-sizing-default"
+        ><i class="fa fa-search"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-default"
+        placeholder="Search category.."
+        [(ngModel)]="search"
+      />
+    </div>
+    <table
+      class="table table-hover table-borderless text-center"
+      *ngIf="competitors$ | async as competitor"
+    >
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Competition Name</th>
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="
+          let competitor of competitor
+            | filter: search
+            | orderBy: sortColumn:reverse
+        "
+      >
+        <tr>
+          <td>{{ competitor.id }}</td>
+          <td>{{ competitor.name }}</td>
+          <td>
+            <!-- <button routerLink="{{ category.id }}" class="btn btn-outline-primary">
+              Select category
+            </button> -->
+          </td>
+          <div class="col-6" style="width: 100%">
+            <button class="btn btn-outline-success" (click)="open(mymodal)">
+              Edit selected competitor
+            </button>
+
+            <ng-template #mymodal let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" style="font-size: 30px;" id="modal-basic-title">
+                  Edit category
+                </h4>
+                <button
+                    style="border: 0;"
+                  type="button"
+                  class="btn btn-outline-danger"
+                  aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"
+                >
+                  <span aria-hidden="true"><i class="fa fa-times" style="border: none;"></i></span>
+                </button>
+              </div>
+
+              <div class="modal-body">
+                <!-- <div class="input-group mb-3"> -->
+                <!-- <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                  </div> -->
+                <!-- <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ sport.id }}"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    [(ngModel)]="inputId"
+                  />
+                </div> -->
+              </div>
+              <div class="modal-body">
+                <div class="input-group mb-3">
+                  <!-- <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                  </div> -->
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ competitor.name }}"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    [(ngModel)]="inputCompetitorName"
+                  />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-outline-success"
+                  (click)="updateCompetitor(competitor)"
+                  (click)="modal.close('Save click')"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  (click)="modal.close('Save click')"
+                >
+                  Cancel
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <td>
+            <button
+              [routerLink]="['/player/competitor/', competitor.id]"
+              class="btn btn-outline-dark"
+            >
+              Show players for competitor
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

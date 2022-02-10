@@ -1,0 +1,18 @@
+<button class="btn btn-outline-primary" (click)="goBack()"><i class="fa fa-arrow-left" style="width: 20px;"></i></button>
+
+<div class="jumbotron">
+  <div class="container" style="width: 800px">
+    <div class="card" *ngIf="selectedSport$ | async as sportDetail">
+      <div class="card-header"><h1 class="display-4">Selected sport</h1></div>
+      <div class="card-body">
+        <h2 class="card-title">
+          ID: <span>{{ sportDetail.id }}</span>
+        </h2>
+        <h2 class="card-title">
+          Sport name: <span>{{ sportDetail.name }}</span>
+        </h2>
+        <!-- <a href="#" class="btn btn-success mt-3">Edit Sport</a> -->
+      </div>
+    </div>
+  </div>
+</div>
